@@ -1,0 +1,33 @@
+{"employer_industry_list" : ["Cloud-based solutions or services", "Consulting", "Data and analytics", "Education and training", "Energy or utilities", "Financial and banking", 
+    "Government or public administration", "Healthcare or social services", "Information technology", "Internet", "Manufacturing", "Marketing", "Media, advertising, publishing, or entertainment", 
+    "Nonprofit", "Real estate", "Research - academic or scientific", "Retail or ecommerce", "Security", "Software as a service (saas) development", "Software development - other", "Telecommunications", 
+    "Transportation", "Travel", "Web development or design"],
+    
+"job_list" : ["Back-End Developer", "Business Applications (BI/CRM/ERP)", "CTO", "Computer & Network Security", "Data Scientist/Data Engineer", "DevOps Engineer", 
+    "Front-End Developer", "Full-Stack Developer", "Maintenance & Support", "Mobile Apps Developer", "Product Owner/Product Manager", "Project Manager", "Quality Assurance/Testing", 
+    "Scrum Master", "Solutions Architect", "SysAdmin Engineer", "Technical Team Leader", "UX/UI Designer"],
+
+"company_country_list" : ["Andorra", "Angola", "Australia", "Austria", "Belgium", "Brazil", "Canada", "Denmark", "Dubai", "Estonia", "Finland", "France", "Germany", "Greece", 
+    "Guernsey", "Guinea", "Hong Kong", "Iceland", "India", "Ireland", "Israel", "Italy", "Japan", "Luxembourg", "Malta", "Netherlands", "Nigeria", "Norway", "Poland", "Portugal", 
+    "Prefer not say", "Romania", "Singapore", "Spain", "Sweden", "Switzerland", "UK", "USA", "No specific country"],
+
+"employer_type_list" : ["Consulting Business", "Corporate", "Nearshore (outsource business processes to companies in a nearby country)", "Outsourcing", "SME - Small or Medium Enterprise (personnel <250)", 
+    "Scale-up (fast growing company aka \"unicorn\")", "Startup (new business venture)"],
+
+"education_list" : ["Basic Education", "High School Education", "Trade/technical/vocational training", "University drop out", "Bachelor degree", "Masters degree", "Doctoral degree", 
+    "I prefer not to answer"],    
+
+"employer_size_list" : ["Less than 10 employees", "10 - 19 employees", "20 - 99 employees", "100 - 499 employees", "500 - 999 employees", "1000 - 4.999 employees", "More than 5.000 employees"],
+
+"work_experience_list" : ["No working experience", "Less than 1 year", "Between 1 - 3 years", "Between 3 - 6 years", "Between 6 - 9 years", "More than 9 years"],
+
+"english_level_list" : ["Elementary", "Limited working proficiency", "Professional working proficiency", "Full professional proficiency", "Native or bilingual proficiency"],
+
+"residence_list" : ["Azores and Madeira", "Centre", "Lisbon Metropolitan Area", "North", "Porto Metropolitan Area", "South", "Other"],
+
+"status_list" : ["Employed full-time", "Working as a Contractor/Freelancer", "Employed part-time"],
+
+"features" : ["Employment_Status", "Job_Role_Original", "Working_Experience", "English_Level", 
+    "Residence_District_Aggregated", "Education_Level", "Work_Company_Country", "Employer_Industry", 
+    "Employer_Org_Type", "Employer_Size"]
+}
