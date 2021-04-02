@@ -23,6 +23,10 @@ lines = f.readlines()
 line_string=''.join(lines)
 render_svg(line_string)
 
+import streamlit_analytics
+
+streamlit_analytics.start_tracking()
+
 # Intro
 st.write("Fairly is a tool to help tech workers living in Portugal know if they're being paid fairly. For more \
 information on how the data was collected and the modelling formulation visit the [official repo](https://github.com/TSFelg/fairly).")
@@ -99,3 +103,5 @@ text = chart.mark_text(align='left', dx=5, dy=-5).encode(
 
 chart = (chart + rule + rule2)
 col3.altair_chart(chart, use_container_width=True)
+
+streamlit_analytics.stop_tracking()
