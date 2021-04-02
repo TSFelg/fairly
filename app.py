@@ -11,7 +11,6 @@ from scipy.special import factorial
 from scipy.stats import poisson, norm
 import json
 from scipy.stats import lognorm
-from annotated_text import annotated_text
 
 with open('params.json') as json_file:
     params = json.load(json_file)
