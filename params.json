@@ -7,9 +7,7 @@
     "Front-End Developer", "Full-Stack Developer", "Maintenance & Support", "Mobile Apps Developer", "Product Owner/Product Manager", "Project Manager", "Quality Assurance/Testing", 
     "Scrum Master", "Solutions Architect", "SysAdmin Engineer", "Technical Team Leader", "UX/UI Designer"],
 
-"company_country_list" : ["Andorra", "Angola", "Australia", "Austria", "Belgium", "Brazil", "Canada", "Denmark", "Dubai", "Estonia", "Finland", "France", "Germany", "Greece", 
-    "Guernsey", "Guinea", "Hong Kong", "Iceland", "India", "Ireland", "Israel", "Italy", "Japan", "Luxembourg", "Malta", "Netherlands", "Nigeria", "Norway", "Poland", "Portugal", 
-    "Prefer not say", "Romania", "Singapore", "Spain", "Sweden", "Switzerland", "UK", "USA", "No specific country"],
+"company_country_list" : ["Belgium","Brazil","France", "Germany", "Ireland","Netherlands","Portugal","Spain","Switzerland","UK","USA", "Other"],
 
 "employer_type_list" : ["Consulting Business", "Corporate", "Nearshore (outsource business processes to companies in a nearby country)", "Outsourcing", "SME - Small or Medium Enterprise (personnel <250)", 
     "Scale-up (fast growing company aka \"unicorn\")", "Startup (new business venture)"],
@@ -25,7 +23,7 @@
 
 "residence_list" : ["Azores and Madeira", "Centre", "Lisbon Metropolitan Area", "North", "Porto Metropolitan Area", "South", "Other"],
 
-"status_list" : ["Employed full-time", "Working as a Contractor/Freelancer", "Employed part-time"],
+"status_list" : ["Employed full-time", "Working as a Contractor/Freelancer"],
 
 "features" : ["Employment_Status", "Job_Role_Original", "Working_Experience", "English_Level", 
     "Residence_District_Aggregated", "Education_Level", "Work_Company_Country", "Employer_Industry", 
