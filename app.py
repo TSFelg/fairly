@@ -11,6 +11,10 @@ from scipy.special import factorial
 from scipy.stats import poisson, norm
 import json
 from scipy.stats import lognorm
+import os
+import streamlit_analytics
+
+
 
 with open('params.json') as json_file:
     params = json.load(json_file)
@@ -22,8 +26,6 @@ f = open("logo.svg","r")
 lines = f.readlines()
 line_string=''.join(lines)
 render_svg(line_string)
-
-import streamlit_analytics
 
 streamlit_analytics.start_tracking()
 
@@ -104,4 +106,4 @@ text = chart.mark_text(align='left', dx=5, dy=-5).encode(
 chart = (chart + rule + rule2)
 col3.altair_chart(chart, use_container_width=True)
 
-streamlit_analytics.stop_tracking()
+streamlit_analytics.stop_tracking(unsafe_password=os.environ.get("ANALYTICS"))
