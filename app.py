@@ -20,7 +20,8 @@ with open('params.json') as json_file:
 
 engine = create_engine(os.getenv("DATABASE_URL"))
 
-st.set_page_config(page_title="Fairly", layout="wide")
+icon = Image.open("coin.png")
+st.set_page_config(page_title="Fairly", layout="wide", page_icon=icon)
 
 # Show logo
 f = open("logo.svg","r")
