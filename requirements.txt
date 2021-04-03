@@ -7,4 +7,5 @@ pandas==1.2.3
 Pillow==8.1.2
 ngboost==0.3.10
 scikit-learn==0.23.2
-streamlit-analytics==0.2.1
+SQLAlchemy==1.4.5
+psycopg2==2.8.6

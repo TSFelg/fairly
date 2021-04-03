@@ -12,12 +12,13 @@ from scipy.stats import poisson, norm
 import json
 from scipy.stats import lognorm
 import os
-import streamlit_analytics
-
-
+from sqlalchemy import create_engine
+import datetime
 
 with open('params.json') as json_file:
     params = json.load(json_file)
+
+engine = create_engine(os.getenv("DATABASE_URL"))
 
 st.set_page_config(page_title="Fairly", layout="wide")
 
@@ -26,8 +27,6 @@ f = open("logo.svg","r")
 lines = f.readlines()
 line_string=''.join(lines)
 render_svg(line_string)
-
-streamlit_analytics.start_tracking()
 
 # Intro
 st.write("Fairly is a tool to help tech workers living in Portugal know if they're being paid fairly. For more \
@@ -51,14 +50,14 @@ employer_size = col2.selectbox('How many employees are in your company?', params
 # Create df
 df = pd.DataFrame([status, job, work_experience, english_level, residence, education, company_country, employer_industry, employer_type, employer_size], index = params["features"])
 df = df.T
-df = clean_data(df)
+df_clean = clean_data(df)
 
 # Load model
 with Path("data/model.p").open("rb") as f:
         model = pickle.load(f)
 
 # Predict
-y_dists = model.pred_dist(df.values)
+y_dists = model.pred_dist(df_clean.values)
 mu  = np.log(y_dists.params["scale"]/1000)
 s  = y_dists.params["s"]
 avg = np.exp(mu + s**2/2)
@@ -106,4 +105,7 @@ text = chart.mark_text(align='left', dx=5, dy=-5).encode(
 chart = (chart + rule + rule2)
 col3.altair_chart(chart, use_container_width=True)
 
-streamlit_analytics.stop_tracking(unsafe_password=os.environ.get("ANALYTICS"))
+df["time"] =  datetime.datetime.now()
+df["Avg_Salary"] = salary
+if col2.button("Upload"):
+    df.to_sql('params', engine, if_exists='append', index=False)
