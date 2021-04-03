@@ -68,12 +68,9 @@ x = np.linspace(0, 120, 1000)
 salary = col3.slider('What is your annual gross salary?', 0, 160, 30)
 pdf = lognorm.pdf(x, s,scale=np.exp(mu))
 cdf = np.round(100*lognorm.cdf(salary, s,scale=np.exp(mu))[0],1)
-#col3.write("- The average worker with your profile is payed {}€.".format(int(avg[0])))
-#col3.write("- You are payed more than {}% of the people.".format(cdf))
-col3.markdown("- The average worker with your profile is payed <font style='color:darkred'>{}€</font>".format(int(avg[0]*1000)) + 
-"\n - You are payed more than <font style='color:darkorange'>{}%</font>".format(cdf) + " of the people", 
+col3.markdown("- The average worker with your profile is paid <font style='color:darkred'>{}€</font>".format(int(avg[0]*1000)) + 
+"\n - You are paid more than <font style='color:darkorange'>{}%</font>".format(cdf) + " of the people", 
 unsafe_allow_html=True)
-#col3.markdown("- You are payed more than <font style='color:orange'>{}%</font>".format(cdf) + " of the people", unsafe_allow_html=True)
 
 source = pd.DataFrame({'salary': x, 'pdf': pdf, 'avg_salary':salary, 'avg':avg[0]})
 chart = alt.Chart(source).mark_line(color='orange').encode(x='salary',y='pdf')
