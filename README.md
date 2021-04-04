@@ -1,5 +1,5 @@
 
-<img src="logo.svg">
+<img src="resources/logo.svg">
 
 Fairly is a tool to help tech workers living in Portugal know if they're being paid fairly. Fairly models the probabilistic distribution of the annual gross salary conditioned on several input features such as the job, years of experience and the company's country location. The app then allows new users to specify their charateristics and understand how they are positioned within the conditional distribution. 
 
