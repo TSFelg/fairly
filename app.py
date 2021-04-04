@@ -11,11 +11,17 @@ from scipy.special import factorial
 from scipy.stats import poisson, norm
 import json
 from scipy.stats import lognorm
+import os
+from sqlalchemy import create_engine
+import datetime
 
 with open('params.json') as json_file:
     params = json.load(json_file)
 
-st.set_page_config(page_title="Fairly", layout="wide")
+engine = create_engine(os.getenv("DATABASE_URL"))
+
+icon = Image.open("coin.png")
+st.set_page_config(page_title="Fairly", layout="wide", page_icon=icon)
 
 # Show logo
 f = open("logo.svg","r")
@@ -45,14 +51,14 @@ employer_size = col2.selectbox('How many employees are in your company?', params
 # Create df
 df = pd.DataFrame([status, job, work_experience, english_level, residence, education, company_country, employer_industry, employer_type, employer_size], index = params["features"])
 df = df.T
-df = clean_data(df)
+df_clean = clean_data(df)
 
 # Load model
 with Path("data/model.p").open("rb") as f:
         model = pickle.load(f)
 
 # Predict
-y_dists = model.pred_dist(df.values)
+y_dists = model.pred_dist(df_clean.values)
 mu  = np.log(y_dists.params["scale"]/1000)
 s  = y_dists.params["s"]
 avg = np.exp(mu + s**2/2)
@@ -62,12 +68,9 @@ x = np.linspace(0, 120, 1000)
 salary = col3.slider('What is your annual gross salary?', 0, 160, 30)
 pdf = lognorm.pdf(x, s,scale=np.exp(mu))
 cdf = np.round(100*lognorm.cdf(salary, s,scale=np.exp(mu))[0],1)
-#col3.write("- The average worker with your profile is payed {}€.".format(int(avg[0])))
-#col3.write("- You are payed more than {}% of the people.".format(cdf))
-col3.markdown("- The average worker with your profile is payed <font style='color:darkred'>{}€</font>".format(int(avg[0]*1000)) + 
-"\n - You are payed more than <font style='color:darkorange'>{}%</font>".format(cdf) + " of the people", 
+col3.markdown("- The average worker with your profile is paid <font style='color:darkred'>{}€</font>".format(int(avg[0]*1000)) + 
+"\n - You are paid more than <font style='color:darkorange'>{}%</font>".format(cdf) + " of the people", 
 unsafe_allow_html=True)
-#col3.markdown("- You are payed more than <font style='color:orange'>{}%</font>".format(cdf) + " of the people", unsafe_allow_html=True)
 
 source = pd.DataFrame({'salary': x, 'pdf': pdf, 'avg_salary':salary, 'avg':avg[0]})
 chart = alt.Chart(source).mark_line(color='orange').encode(x='salary',y='pdf')
@@ -99,3 +102,8 @@ text = chart.mark_text(align='left', dx=5, dy=-5).encode(
 
 chart = (chart + rule + rule2)
 col3.altair_chart(chart, use_container_width=True)
+
+df["time"] =  datetime.datetime.now()
+df["Avg_Salary"] = salary
+if col2.button("Upload"):
+    df.to_sql('params', engine, if_exists='append', index=False)
