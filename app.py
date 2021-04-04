@@ -20,11 +20,11 @@ with open('params.json') as json_file:
 
 engine = create_engine(os.getenv("DATABASE_URL"))
 
-icon = Image.open("coin.png")
+icon = Image.open("resources/coin.png")
 st.set_page_config(page_title="Fairly", layout="wide", page_icon=icon)
 
 # Show logo
-f = open("logo.svg","r")
+f = open("resources/logo.svg","r")
 lines = f.readlines()
 line_string=''.join(lines)
 render_svg(line_string)
