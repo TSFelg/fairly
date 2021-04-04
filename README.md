@@ -8,8 +8,6 @@ to generate knowledge based on the [Tech Careers Report 2021](https://wp.landing
 - **ML Stack:** Data processing and transformers are implemented using `numpy`, `pandas`, and `scikit-learn`. The models are developed using `ngboost` and `scipy`. Visualizations are built with `altair`.
 - **Ops Stack:** The web app is developed using `streamlit` and the data collection uses `postgresql`. Both are hosted on `heroku`.
 
-___
-
 # Data
 
 The data used in this project comes from the [Tech Careers Report 2021](https://wp.landing.jobs/techcareersreport2021/?utm_source=taikai&utm_medium=event-platform&utm_term=102909&utm_content=tech-careers-report-taikai&utm_campaign=tech-careers-report-2021) which gathered more than 3000 answers from tech workers in Portugal. The report collected more than 100 variables but not all of these are relevant for answering the question: "Are you paid fairly?". Adding to this the fact that when the app is deployed the objective is for it to be easy for users to get their answer, this makes it important to find the right balance between data collection exaustivness and model performance. Given this, there are three main reasons why features were discarded:
