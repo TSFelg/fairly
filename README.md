@@ -17,5 +17,5 @@ The data used in this project comes from the [Tech Careers Report 2021](https://
 - **Non-relevance:** Opposite to the previous, certain features may have a plausible causal relation with our question but the data shows they are not relevant. Examples include the size of the company and the languages and frameworks the worker knows. These features may not be relevant because the information they provide is already contained in other features. For example, the size of the company may also be explained already by the organisation type (start-up, scale-up, corporate, etc.) while the languages and frameworks should be strongly correlated with the job type (Data Scientist, Backend Dev, etc.).
 
 After this selection the final features used to train the model are:
-`Working_Experience`, `English Level`, `Residence District`, `Education Level`, `Company Country`, `Company Type`, `Employment Status`, `Job Role`.
+`Working Experience`, `English Level`, `Residence District`, `Education Level`, `Company Country`, `Company Type`, `Employment Status`, `Job Role`.
 The first two were ordinally encoded and the latter were one-hot encoded.
