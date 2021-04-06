@@ -56,7 +56,6 @@ df_processed = process_data(df)
 df["time"] =  datetime.datetime.now()
 df["Avg_Salary"] = salary
 
-@st.cache(allow_output_mutation=True)
 def load_model():
     with Path("modelling/model.p").open("rb") as f:
         model = pickle.load(f)
