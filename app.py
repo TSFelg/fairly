@@ -47,7 +47,10 @@ residence = col2.selectbox('Where in Portugal do you live?', params["residence_l
 status = col2.selectbox('What is your working status?', params["status_list"])
 employer_type = col2.selectbox('Which of these best represents your employer?', params["employer_type_list"])
 company_country = col2.selectbox('Where is the company you work for located?', params["company_country_list"], 6)
-salary = col1.slider('What is your annual gross salary?', 0, 200, 30)
+
+
+col4, col5, col6= st.beta_columns((1,1,1.5))
+salary = col4.slider('What is your annual gross salary? This should include bonuses, meal and medical allowance, etc.', 0, 160, 30)
 
 # Create df
 df = pd.DataFrame([status, job, work_experience, english_level, residence, education, company_country, employer_type], index = params["features"])
@@ -77,7 +80,7 @@ pdf = lognorm.pdf(x, s,scale=np.exp(mu))
 cdf = lognorm.cdf(x, s,scale=np.exp(mu))
 treshold = np.round(100*lognorm.cdf(salary, s,scale=np.exp(mu))[0],1)
 
-x_max_arg = np.argwhere(cdf > 0.992)[0][0]
+x_max_arg = np.argwhere(cdf > 0.99)[0][0]
 x_max = np.max([x[x_max_arg],salary])
 x_ax_max = 100.0 if x_max<100 else x_max
 y_ax_max = 0.08 if max(pdf)<0.07 else max(pdf)
@@ -94,11 +97,12 @@ rule2 = alt.Chart(source).mark_rule(color='indianred', size=2, strokeDash=[5,5])
 #col3.markdown("<font style='color:yellowgreen'> **Results** </font>", unsafe_allow_html=True)
 col3.markdown("\n")
 chart = (chart + rule + rule2)
-col3.altair_chart(chart, use_container_width=True)
+col3.altair_chart(chart)
 
-col3.markdown("&nbsp; The average worker with your profile is paid <font style='color:darkred'>{}€</font>  ".format(int(avg[0]*1000)) + 
-"\n &nbsp; You are paid more than <font style='color:darkorange'>{}%</font>".format(treshold) + " of the people", 
+col6.markdown("The average worker with your profile is paid <font style='color:darkred'>{}€</font>.    ".format(int(avg[0]*1000)) + 
+"\n You are paid more than <font style='color:darkorange'>{}%</font>".format(treshold) + " of the population with your profile.", 
 unsafe_allow_html=True)
 
-if col2.button("Please consider uploading your data to continue improving the model"):
+if col5.button("Upload anonymous data to continue improving the model"):
     df.to_sql('params', engine, if_exists='append', index=False)
+
