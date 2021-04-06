@@ -21,11 +21,10 @@
 
 "english_level_list" : ["Elementary", "Limited working proficiency", "Professional working proficiency", "Full professional proficiency", "Native or bilingual proficiency"],
 
-"residence_list" : ["Azores and Madeira", "Centre", "Lisbon Metropolitan Area", "North", "Porto Metropolitan Area", "South", "Other"],
+"residence_list" : ["Azores and Madeira", "Centre", "Lisbon Metropolitan Area", "North", "Porto Metropolitan Area", "South"],
 
 "status_list" : ["Employed full-time", "Working as a Contractor/Freelancer"],
 
 "features" : ["Employment_Status", "Job_Role_Original", "Working_Experience", "English_Level", 
-    "Residence_District_Aggregated", "Education_Level", "Work_Company_Country", "Employer_Industry", 
-    "Employer_Org_Type", "Employer_Size"]
+    "Residence_District_Aggregated", "Education_Level", "Work_Company_Country", "Employer_Org_Type"]
 }

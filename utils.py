@@ -4,26 +4,24 @@ from pathlib import Path
 import pickle
 import streamlit as st
 
-def clean_data(df):
+def process_data(df):
     df = df[['Employment_Status', 'Residence_District_Aggregated',
-    'Work_Company_Country', 'Job_Role_Original', 'Employer_Industry',
-    'Employer_Org_Type', 'Employer_Size', 'English_Level',
+    'Work_Company_Country', 'Job_Role_Original', 'Employer_Org_Type', 'English_Level',
     'Education_Level', 'Working_Experience']]
 
-    with Path("data/ordinal_encoder.p").open("rb") as f:
+    with Path("modelling/ordinal_encoder.p").open("rb") as f:
         ordinal_encoder = pickle.load(f)
 
-    ordinal_features = ["English_Level", "Working_Experience", "Employer_Size"]
+    ordinal_features = ["English_Level", "Working_Experience"]
     df[ordinal_features] = ordinal_encoder.transform(df[ordinal_features])
 
-    with Path("data/onehot_encoder.p").open("rb") as f:
+    with Path("modelling/onehot_encoder.p").open("rb") as f:
         onehot_encoder = pickle.load(f)
 
     onehot_features = ["Employment_Status",
                         "Residence_District_Aggregated",
                         "Work_Company_Country",
                         "Job_Role_Original",         
-                        "Employer_Industry",            
                         "Employer_Org_Type",
                         "Education_Level"]
 
