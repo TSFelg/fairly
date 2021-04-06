@@ -49,9 +49,10 @@ employer_type = col2.selectbox('Which of these best represents your employer?', 
 company_country = col2.selectbox('Where is the company you work for located?', params["company_country_list"], 6)
 
 
-col4, col5, col6= st.beta_columns((1,1,1.5))
+col4, col6= st.beta_columns((2,1.5))
 salary = col4.slider('What is your annual gross salary? This should include bonuses, meal and medical allowance, etc.', 0, 160, 30)
 
+col7, col8, col9, col10 = st.beta_columns((0.5,0.5,0.5,1.5))
 # Create df
 df = pd.DataFrame([status, job, work_experience, english_level, residence, education, company_country, employer_type], index = params["features"])
 df = df.T
@@ -103,6 +104,6 @@ col6.markdown("The average worker with your profile is paid <font style='color:d
 "\n You are paid more than <font style='color:darkorange'>{}%</font>".format(treshold) + " of the population with your profile.", 
 unsafe_allow_html=True)
 
-if col5.button("Upload anonymous data to continue improving the model"):
+if col8.button("Upload anonymous data to continue improving the model"):
     df.to_sql('params', engine, if_exists='append', index=False)
 
