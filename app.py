@@ -56,6 +56,7 @@ df_processed = process_data(df)
 df["time"] =  datetime.datetime.now()
 df["Avg_Salary"] = salary
 
+@st.cache(allow_output_mutation=True)
 def load_model():
     with Path("modelling/model.p").open("rb") as f:
         model = pickle.load(f)
@@ -64,13 +65,11 @@ def load_model():
 # Load model
 model = load_model()
 
-
 # Predict
 y_dists = model.pred_dist(df_processed.values)
 mu  = np.log(y_dists.params["scale"]/1000)
 s  = y_dists.params["s"]
 avg = np.exp(mu + s**2/2)
-
 
 x = np.linspace(0, 500, 1000)
 
