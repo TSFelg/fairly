@@ -37,3 +37,16 @@ def render_svg(svg):
     b64 = base64.b64encode(svg.encode('utf-8')).decode("utf-8")
     html = r'<img src="data:image/svg+xml;base64,%s"/>' % b64
     st.sidebar.write(html, unsafe_allow_html=True)
+
+def set_max_width():
+    max_width_str = f"max-width: 1200px;"
+    st.markdown(
+        f"""
+    <style>
+    .reportview-container .main .block-container{{
+        {max_width_str}
+    }}
+    </style>    
+    """,
+        unsafe_allow_html=True,
+    )
