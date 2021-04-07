@@ -19,3 +19,11 @@ The data used in this project comes from the [Tech Careers Report 2021](https://
 After this selection the final features used to train the model are:
 `Working Experience`, `English Level`, `Residence District`, `Education Level`, `Company Country`, `Company Type`, `Employment Status`, `Job Role`.
 The first two were ordinally encoded and the latter were one-hot encoded.
+
+# Modelling
+
+|      | LogNormal | Normal | Laplace |
+|------|-----------|--------|---------|
+| NLL  | **10.66**     | 10.88  | 10.76   |
+| MAE  | 13774     | 13832  | **13344**   |
+| RMSE | **18325**     | 18353  | 19052   |
