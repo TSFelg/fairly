@@ -26,16 +26,19 @@ engine = create_engine(os.getenv("DATABASE_URL"))
 icon = Image.open("resources/coin.png")
 st.set_page_config(page_title="Fairly", layout="wide", page_icon=icon, initial_sidebar_state="expanded")
 
-st.markdown(
-    f'''
-        <style>
-            .sidebar .sidebar-content {{
-                width: 60000px;
-            }}
-        </style>
-    ''',
-    unsafe_allow_html=True
-)
+def _max_width_():
+    max_width_str = f"max-width: 1200px;"
+    st.markdown(
+        f"""
+    <style>
+    .reportview-container .main .block-container{{
+        {max_width_str}
+    }}
+    </style>    
+    """,
+        unsafe_allow_html=True,
+    )
+_max_width_()
 
 # Show logo
 f = open("resources/logo.svg","r")
@@ -99,15 +102,20 @@ y_ax_max = 0.08 if max(pdf)<0.07 else max(pdf)
 
 
 source = pd.DataFrame({'salary': x, 'pdf': pdf, 'avg_salary':salary, 'avg':avg[0]})
-chart = alt.Chart(source).mark_line(color='orange', clip=True).encode(x = alt.X('salary', scale=alt.Scale(domain=[0, x_ax_max])), 
-                                                           y = alt.Y('pdf', scale=alt.Scale(domain=[0, y_ax_max]))
-                                                           ).properties(height=450)
 
-rule = alt.Chart(source).mark_rule(color='#5DAB24', size=2).encode(x=alt.X('avg_salary', axis=alt.Axis(title="annual gross salary (k€)")))
-rule2 = alt.Chart(source).mark_rule(color='indianred', size=2, strokeDash=[5,5]).encode(x='mean(avg)')
+chart = alt.Chart(source).transform_fold(['Conditional Distribution']).mark_line(color='orange', clip=True).encode(x = alt.X('salary', scale=alt.Scale(domain=[0, x_ax_max])), 
+                                        y = alt.Y('pdf', scale=alt.Scale(domain=[0, y_ax_max])),color=alt.Color('key:N', scale=alt.Scale(range=['orange','indianred','#5DAB24',]),
+                                        legend=alt.Legend(title=None, labelFontSize=15,symbolStrokeWidth=10, orient="top-right"))).properties(height=450)
+
+rule = alt.Chart(source).transform_fold(['Your salary']).mark_rule(color='#5DAB24', size=2).encode(x=alt.X('avg_salary', axis=alt.Axis(title="annual gross salary (k€)")),color=alt.Color('key:N', 
+                                        scale=alt.Scale(range=['indianred','#5DAB24',]),legend=alt.Legend(title=None)))
+
+rule2 = alt.Chart(source).transform_fold(['Conditional Mean']).mark_rule(color='indianred', size=2, strokeDash=[5,5]).encode(x='mean(avg)', color=alt.Color('key:N', 
+                                        scale=alt.Scale(range=['indianred']),legend=alt.Legend(title=None)))
+
 
 st.header("Estimated Conditional Distribution")
-col9, col10 = st.beta_columns((1,1))
+col9, col10, col11 = st.beta_columns((1,1, 0.3))
 
 col9.markdown("- The average worker with your profile is paid <font style='color:darkred'>{}€</font>.    ".format(int(avg[0]*1000)) + 
 "\n - You are paid more than <font style='color:darkorange'>{}%</font>".format(treshold) + " of the population with your profile.", 
@@ -118,8 +126,8 @@ chart = (chart + rule + rule2)
 st.altair_chart(chart, use_container_width=True)
 
 
-
-if col10.button("Upload anonymous data to continue improving the model :)"):
+col10.write("- Consider uploading your data to continue improving the model. Please use your real salary to avoid polluting the dataset :)")
+if col11.button("Upload"):
     df.to_sql('params', engine, if_exists='append', index=False)
 
 
