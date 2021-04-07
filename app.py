@@ -24,7 +24,18 @@ with open('params.json') as json_file:
 engine = create_engine(os.getenv("DATABASE_URL"))
 
 icon = Image.open("resources/coin.png")
-st.set_page_config(page_title="Fairly", layout="wide", page_icon=icon)
+st.set_page_config(page_title="Fairly", layout="wide", page_icon=icon, initial_sidebar_state="expanded")
+
+st.markdown(
+    f'''
+        <style>
+            .sidebar .sidebar-content {{
+                width: 60000px;
+            }}
+        </style>
+    ''',
+    unsafe_allow_html=True
+)
 
 # Show logo
 f = open("resources/logo.svg","r")
@@ -33,12 +44,13 @@ line_string=''.join(lines)
 render_svg(line_string)
 
 # Intro
-st.write("Fairly is a tool to help tech workers living in Portugal know if they're being paid fairly. For more \
+st.sidebar.write("Fairly is a tool to help tech workers living in Portugal know if they're being paid fairly. For more \
 information on how the data was collected and the modelling formulation visit the [official repo](https://github.com/TSFelg/fairly).")
 
 # Menu
-col1, col2, col3= st.beta_columns((1,1,1.5))
+col1 = col2 =  col3= st.sidebar
 
+salary = col3.slider('What is your annual gross salary? This should include bonuses, meal and medical allowance, etc.', 0, 160, 30)
 job = col1.selectbox('What is your job?', params["job_list"])
 work_experience = col1.selectbox('How much work experience do you have?', params["work_experience_list"], 3)
 education = col1.selectbox('What is your level of education?', params["education_list"], 5)
@@ -50,7 +62,6 @@ company_country = col2.selectbox('Where is the company you work for located?', p
 
 
 col4, col6= st.beta_columns((2,1.5))
-salary = col4.slider('What is your annual gross salary? This should include bonuses, meal and medical allowance, etc.', 0, 160, 30)
 
 col7, col8, col9, col10 = st.beta_columns((0.5,0.5,0.5,1.5))
 # Create df
@@ -86,24 +97,29 @@ x_max = np.max([x[x_max_arg],salary])
 x_ax_max = 100.0 if x_max<100 else x_max
 y_ax_max = 0.08 if max(pdf)<0.07 else max(pdf)
 
+
 source = pd.DataFrame({'salary': x, 'pdf': pdf, 'avg_salary':salary, 'avg':avg[0]})
 chart = alt.Chart(source).mark_line(color='orange', clip=True).encode(x = alt.X('salary', scale=alt.Scale(domain=[0, x_ax_max])), 
                                                            y = alt.Y('pdf', scale=alt.Scale(domain=[0, y_ax_max]))
-                                                           ).properties(height=350)
+                                                           ).properties(height=450)
 
 rule = alt.Chart(source).mark_rule(color='#5DAB24', size=2).encode(x=alt.X('avg_salary', axis=alt.Axis(title="annual gross salary (k€)")))
 rule2 = alt.Chart(source).mark_rule(color='indianred', size=2, strokeDash=[5,5]).encode(x='mean(avg)')
 
+st.header("Estimated Conditional Distribution")
+col9, col10 = st.beta_columns((1,1))
 
+col9.markdown("- The average worker with your profile is paid <font style='color:darkred'>{}€</font>.    ".format(int(avg[0]*1000)) + 
+"\n - You are paid more than <font style='color:darkorange'>{}%</font>".format(treshold) + " of the population with your profile.", 
+unsafe_allow_html=True)
 #col3.markdown("<font style='color:yellowgreen'> **Results** </font>", unsafe_allow_html=True)
 col3.markdown("\n")
 chart = (chart + rule + rule2)
-col3.altair_chart(chart)
+st.altair_chart(chart, use_container_width=True)
 
-col6.markdown("The average worker with your profile is paid <font style='color:darkred'>{}€</font>.    ".format(int(avg[0]*1000)) + 
-"\n You are paid more than <font style='color:darkorange'>{}%</font>".format(treshold) + " of the population with your profile.", 
-unsafe_allow_html=True)
 
-if col8.button("Upload anonymous data to continue improving the model"):
+
+if col10.button("Upload anonymous data to continue improving the model :)"):
     df.to_sql('params', engine, if_exists='append', index=False)
+
 
