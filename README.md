@@ -31,3 +31,8 @@ To model the conditional distribution we used [ngboost](https://stanfordmlgroup.
 | NLL  | **10.66**     | 10.88  | 10.76   |
 | MAE  | **9474**     | 9644  | 9509   |
 | RMSE | **13735**     | 13844  | 14043   |
+
+# Model Explainability
+
+To understand how the model is learning to estimate the conditional distrubtion we ran a [shap](https://github.com/slundberg/shap) analysis on the deployed model. The image below allows us to understand what are the main features the model took into account and how they impact the predictions. For example, the working experience is the feature that most impacts model predictions which is aligned with our expectations: the more years of experience the higher the salary. There are other expected cases such as higher salaries for those working in Lisbon, those with Msc degrees and CTOs. 
+<img src="resources/shap.png">
