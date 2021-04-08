@@ -21,9 +21,13 @@ After this selection the final features used to train the model are:
 The first two were ordinally encoded and the latter were one-hot encoded.
 
 # Modelling
+Fairly models the probabilistic distribution of the gross annual salary conditioned on the input features. With a deterministic model we could only say if the user is paid more or less than the average of the population with its profile. But given the natural variance in the data this wouldn't be very informative, you may be paid more or less because of some variables we're not conditioning on or simply due to the aleatoric uncertainty in the data. But by modelling the full conditional distribution we enable questions such as: "Is my salary lower than 20% of the population with the same profile?". These are empowering questions that can help users know if they're paid fairly.
+
+To model the conditional distribution we used [ngboost](https://stanfordmlgroup.github.io/projects/ngboost/). This model takes the high performance of gradient boosting algorithms coupled with natural gradients to learn multi-parameter distributions. The chosen distributions to model were the `LogNormal`, `Normal`, and `Laplace`. For each of these distributions the models were trained using grid search with cross-validation to explore the hyper-parameter space of the ngboost models. The results of the best model according to the negative log likelihood (NLL) were chosen and tested for the mean absolute error (MAE) and the root mean squared error (RMSE) as well. As can be seen on the table below the LogNormal distribution obtained the best results not only in terms of the NLL, which was expected given that it is the distribution that best fits the target distrbution, but also on the deterministic scores. This highlights the idea that calibrated probabilistic models can also be of interest for deterministic tasks. 
+
 
 |      | LogNormal | Normal | Laplace |
 |------|-----------|--------|---------|
 | NLL  | **10.66**     | 10.88  | 10.76   |
-| MAE  | 13774     | 13832  | **13344**   |
-| RMSE | **18325**     | 18353  | 19052   |
+| MAE  | **9474**     | 9644  | 9509   |
+| RMSE | **13735**     | 13844  | 14043   |
