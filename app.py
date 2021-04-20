@@ -37,16 +37,16 @@ with st.sidebar: components.html('<a href="https://twitter.com/TSFelg?ref_src=tw
 
 # Intro
 st.sidebar.write("Fairly is a tool to help tech workers living in Portugal know if they're being paid fairly. For more \
-information on how the data was collected and the modelling formulation visit the [official repo](https://github.com/TSFelg/fairly).")
+information visit the [official repo](https://github.com/TSFelg/fairly). Leave your feedback [here](https://forms.gle/M8oBHAASBbvEaTq57)")
 
 # Menu
 salary = st.sidebar.slider('What is your annual gross salary? This should include bonuses, meal and medical allowance, etc.', 0, 160, 30)
+status = st.sidebar.selectbox("What is your working status? If you're a contractor/freelancer adjust the salary to the equivalent of 1600 hours/year.", params["status_list"])
 job = st.sidebar.selectbox('What is your job?', params["job_list"])
 work_experience = st.sidebar.selectbox('How much work experience do you have?', params["work_experience_list"], 3)
 education = st.sidebar.selectbox('What is your level of education?', params["education_list"], 5)
 english_level = st.sidebar.selectbox('What is your english level?', params["english_level_list"], 2)
 residence = st.sidebar.selectbox('Where in Portugal do you live?', params["residence_list"], 2)
-status = st.sidebar.selectbox('What is your working status?', params["status_list"])
 employer_type = st.sidebar.selectbox('Which of these best represents your employer?', params["employer_type_list"])
 company_country = st.sidebar.selectbox('Where is the company you work for located?', params["company_country_list"], 6)
 
@@ -96,6 +96,7 @@ unsafe_allow_html=True)
 col2.write("- Consider uploading your data to continue improving the model. Please use your real salary to avoid polluting the dataset :)")
 if col3.button("Upload"):
     df.to_sql('params', engine, if_exists='append', index=False)
+    st.warning("Thanks for sharing your anonymous data! Consider leaving your feedback [here](https://forms.gle/M8oBHAASBbvEaTq57)")
 
 # Plotting
 source = pd.DataFrame({'salary': x, 'pdf': pdf, 'user_salary':salary, 'conditional_mean':conditional_mean})
@@ -112,7 +113,3 @@ rule2 = alt.Chart(source).transform_fold(['Conditional Mean']).mark_rule(color='
 
 chart = (chart + rule + rule2)
 st.altair_chart(chart, use_container_width=True)
-
-
-
-
