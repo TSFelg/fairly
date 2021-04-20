@@ -15,6 +15,8 @@ import os
 from sqlalchemy import create_engine
 import datetime
 
+import streamlit.components.v1 as components  # Import Streamlit
+
 # Configs
 with open('params.json') as json_file:
     params = json.load(json_file)
@@ -29,6 +31,9 @@ f = open("resources/logo.svg","r")
 lines = f.readlines()
 line_string=''.join(lines)
 render_svg(line_string)
+
+with st.sidebar: components.html('<a href="https://twitter.com/TSFelg?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-show-count="false">Follow @TSFelg</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>', width=150, height=30)
+
 
 # Intro
 st.sidebar.write("Fairly is a tool to help tech workers living in Portugal know if they're being paid fairly. For more \
