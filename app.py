@@ -32,12 +32,11 @@ lines = f.readlines()
 line_string=''.join(lines)
 render_svg(line_string)
 
-with st.sidebar: components.html('<a href="https://twitter.com/TSFelg?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-show-count="false">Follow @TSFelg</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>', width=150, height=30)
-
+with st.sidebar:
+    st.write("[![Star](https://img.shields.io/github/stars/tsfelg/fairly.svg?logo=github&style=social)](https://gitHub.com/tsfelg/fairly) [![Follow](https://img.shields.io/twitter/follow/TSFelg?style=social)](https://www.twitter.com/TSFelg)")
 
 # Intro
-st.sidebar.write("Fairly is a tool to help tech workers living in Portugal know if they're being paid fairly. For more \
-information visit the [official repo](https://github.com/TSFelg/fairly). Leave your feedback [here](https://forms.gle/M8oBHAASBbvEaTq57)")
+st.sidebar.write("Fairly is a tool to help tech workers living in Portugal know if they're being paid fairly.")
 
 # Menu
 salary = st.sidebar.slider('What is your annual gross salary? This should include bonuses, meal and medical allowance, etc.', 0, 160, 30)
